@@ -1,0 +1,19 @@
+# Arquivos e diretórios específicos para Node.js
+node_modules/
+npm-debug.log
+
+# Arquivo de ambiente
+.env
+
+# Arquivo de configuração vscode
+.vscode
+
+# Arquivo de configuração prettier
+.prettierrc
+
+# Arquivos gerados na build
+/build
+
+# Logs
+logs
+*.log*
