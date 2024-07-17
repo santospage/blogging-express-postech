@@ -1,10 +1,10 @@
 import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
-import { config } from './config/config';
-import Logging from './library/Logging';
-import categoryRoutes from './routes/CategoryRouters';
-import classRoutes from './routes/ClassRouters';
+import { config } from './Config/config';
+import Logging from './Library/Logging';
+import categoryRoutes from './Routes/CategoryRouters';
+import classRoutes from './Routes/ClassRouters';
 
 const router = express();
 
@@ -49,8 +49,8 @@ const StartServer = () => {
   });
 
   //Routes
-  router.use('/blogging', categoryRoutes);
-  router.use('/blogging', classRoutes);
+  router.use('/blogging', new categoryRoutes().getCategoryRouter());
+  router.use('/blogging', new classRoutes().getClassRouter());
 
   //Healthcheck
   router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));
