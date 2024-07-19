@@ -1,72 +1,51 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response, Request } from 'express';
+import CategoryService from '../Services/CategoryService';
+import ICategory from '../Interfaces/ICategory';
 import mongoose from 'mongoose';
-import Category from '../Models/Category';
 
 export default class CategoryController {
   private res: Response;
   private req: Request;
   private next: NextFunction;
+  private categoryService: CategoryService;
 
   constructor(req: Request, res: Response, next: NextFunction) {
     this.res = res;
     this.req = req;
     this.next = next;
+    this.categoryService = new CategoryService();
   }
 
-  public listCategory = async () => {
-    try {
-      const categories = await Category.find();
-      return this.res.status(200).json({ categories });
-    } catch (error) {
-      return this.res.status(500).json({ error });
-    }
-  };
+  public async listCategory() {
+    const categories = await this.categoryService.listCategory();
+    return this.res.status(201).json(categories);
+  }
 
-  public listCategoryById = async () => {
-    const categoryId = this.req.params.id;
-    try {
-      const category = await Category.findById(categoryId);
-      return category ? this.res.status(200).json({ category }) : this.res.status(404).json({ message: 'Not found' });
-    } catch (error) {
-      return this.res.status(500).json({ error });
-    }
-  };
+  public async listCategoryById() {
+    const { id } = this.req.params;
+    const category = await this.categoryService.listCategoryById(id);
+    return this.res.status(201).json(category);
+  }
 
   public createCategory = async () => {
-    const { name } = this.req.body;
-    const category = new Category({
-      _id: new mongoose.Types.ObjectId(),
-      name
-    });
-    try {
-      const category_1 = await category.save();
-      return this.res.status(201).json({ category });
-    } catch (error) {
-      return this.res.status(500).json({ error });
+    const category: ICategory = { id: String(new mongoose.Types.ObjectId()), name: this.req.body.name };
+    const newCategory = await this.categoryService.createCategory(category);
+    if (newCategory) {
+      return this.res.status(201).json({ message: 'Category created!', id: newCategory });
     }
+    return this.res.status(400).json({ message: 'Category is already created!', id: newCategory });
   };
 
-  public updateCategory = async () => {
-    const categoryId = this.req.params.id;
-    return Category.findById(categoryId)
-      .then((category) => {
-        if (category) {
-          category.set(this.req.body);
-          return category
-            .save()
-            .then((category) => this.res.status(201).json({ category }))
-            .catch((error) => this.res.status(500).json({ error }));
-        } else {
-          this.res.status(404).json({ message: 'Not found' });
-        }
-      })
-      .catch((error) => this.res.status(500).json({ error }));
-  };
+  public async updateCategory() {
+    const { id } = this.req.params;
+    const category: ICategory = { ...this.req.body };
+    const updateCategory = await this.categoryService.updateCategory(id, category);
+    return this.res.status(201).json(updateCategory);
+  }
 
-  public deleteCategory = async () => {
-    const categoryId = this.req.params.id;
-    return Category.findByIdAndDelete(categoryId)
-      .then((category) => (category ? this.res.status(201).json({ message: 'deleted' }) : this.res.status(404).json({ message: 'Not found' })))
-      .catch((error) => this.res.status(500).json({ error }));
-  };
+  public async deleteCategory() {
+    const { id } = this.req.params;
+    await this.categoryService.deleteCategory(id);
+    return this.res.status(200).json({ message: 'Category deleted!', id: id });
+  }
 }
