@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 import { config } from './Config/config';
 import Logging from './Library/Logging';
 import categoryRoutes from './Routes/CategoryRouters';
-import classRoutes from './Routes/ClassRouters';
 import classRoomRoutes from './Routes/ClassRoomRouters';
 
 const router = express();
@@ -51,7 +50,6 @@ const StartServer = () => {
 
   //Routes
   router.use('/blogging', new categoryRoutes().getCategoryRouter());
-  router.use('/blogging', new classRoutes().getClassRouter());
   router.use('/blogging', new classRoomRoutes().getClassRoomRouter());
 
   //Healthcheck

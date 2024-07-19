@@ -8,15 +8,18 @@ export default class CategoryODM {
   constructor() {
     this.schema = new Schema<ICategory>(
       {
-        name: { type: String, required: [true, 'The category name is mandatory'] }
+        name: { type: String, required: [true, 'O nome da categoria é obrigatório'] }
       },
       {
-        versionKey: false,
-        timestamps: true
+        versionKey: false
       }
     );
 
     this.model = models.Categories || mongoose.model('Categories', this.schema);
+  }
+
+  public getModel(): Model<ICategory> {
+    return this.model;
   }
 
   public async getAllCategories() {
