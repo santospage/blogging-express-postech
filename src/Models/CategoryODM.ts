@@ -1,5 +1,6 @@
-import mongoose, { Schema, Model, model, models } from 'mongoose';
+import mongoose, { Schema, Model, model, models, SortOrder } from 'mongoose';
 import ICategory from '../Interfaces/ICategory';
+import QueryParams from '../Interfaces/IQueryParams';
 
 export default class CategoryODM {
   private schema: Schema;
@@ -22,8 +23,17 @@ export default class CategoryODM {
     return this.model;
   }
 
-  public async getAllCategories() {
-    return await this.model.find();
+  public async getAllCategories(params: QueryParams) {
+    const { pageSize = '5', page = '1', ordering = '_id:1' } = params;
+    const pageSizeNum = parseInt(pageSize);
+    const pageNum = parseInt(page) - 1;
+    const [sortField, sortOrder] = ordering.split(':');
+    const sort: { [key: string]: SortOrder } = { [sortField]: sortOrder === '1' ? 1 : -1 };
+    return await this.model
+      .find()
+      .sort(sort)
+      .limit(pageSizeNum)
+      .skip(pageSizeNum * pageNum);
   }
 
   public async getCategoryById(id: string) {

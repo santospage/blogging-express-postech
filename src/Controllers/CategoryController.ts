@@ -5,28 +5,22 @@ import mongoose from 'mongoose';
 import NotFound from '../Errors/NotFound';
 
 export default class CategoryController {
-  private res: Response;
-  private req: Request;
-  private next: NextFunction;
   private categoryService: CategoryService;
 
-  constructor(req: Request, res: Response, next: NextFunction) {
-    this.res = res;
-    this.req = req;
-    this.next = next;
+  constructor(private req: Request, private res: Response, private next: NextFunction) {
     this.categoryService = new CategoryService();
   }
 
-  public async listCategory() {
+  public async listCategory(): Promise<void> {
     try {
-      const categories = await this.categoryService.listCategory();
+      const categories = await this.categoryService.listCategory(this.req.query);
       this.res.status(201).json(categories);
     } catch (e) {
       this.next(e);
     }
   }
 
-  public async listCategoryById() {
+  public async listCategoryById(): Promise<void> {
     try {
       const { id } = this.req.params;
       const categoryFound = await this.categoryService.listCategoryById(id);
@@ -40,7 +34,7 @@ export default class CategoryController {
     }
   }
 
-  public createCategory = async () => {
+  public createCategory = async (): Promise<void> => {
     try {
       const category: ICategory = { id: String(new mongoose.Types.ObjectId()), ...this.req.body };
       const newCategory = await this.categoryService.createCategory(category);
@@ -50,7 +44,7 @@ export default class CategoryController {
     }
   };
 
-  public async updateCategory() {
+  public async updateCategory(): Promise<void> {
     try {
       const { id } = this.req.params;
       const category: ICategory = { ...this.req.body };
@@ -65,7 +59,7 @@ export default class CategoryController {
     }
   }
 
-  public async deleteCategory() {
+  public async deleteCategory(): Promise<void> {
     try {
       const { id } = this.req.params;
       const categoryFound = await this.categoryService.deleteCategory(id);

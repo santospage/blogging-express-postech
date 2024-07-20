@@ -6,6 +6,7 @@ export default class ClassRoomRouter {
 
   public getClassRoomRouter() {
     this.router.get('/classes', (req, res, next) => new classRoomController(req, res, next).listClasses());
+    this.router.get('/classes/managerial', (req, res, next) => new classRoomController(req, res, next).listClassesManagerial());
     this.router.get('/classes/:id', (req, res, next) => new classRoomController(req, res, next).listClassRoomById());
     this.router.post('/classes', (req, res, next) => new classRoomController(req, res, next).createClassRoom());
     this.router.put('/classes/:id', (req, res, next) => new classRoomController(req, res, next).updateClassRoom());

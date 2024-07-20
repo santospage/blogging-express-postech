@@ -1,6 +1,7 @@
-import mongoose, { Schema, Model, models } from 'mongoose';
+import mongoose, { Schema, Model, models, SortOrder } from 'mongoose';
 import IClassRoom from '../Interfaces/IClassRoom';
 import CategoryODM from './CategoryODM';
+import QueryParams from '../Interfaces/IQueryParams';
 
 export default class ClassRoomODM {
   private schema: Schema;
@@ -27,12 +28,40 @@ export default class ClassRoomODM {
     this.categoryODM.getModel();
   }
 
-  public async getAllClasses() {
-    return await this.model.find().populate('category');
+  public async getAllClasses(params: QueryParams) {
+    const { pageSize = '5', page = '1', ordering = '_id:1' } = params;
+    const pageSizeNum = parseInt(pageSize);
+    const pageNum = parseInt(page) - 1;
+    const [sortField, sortOrder] = ordering.split(':');
+    const sort: { [key: string]: SortOrder } = { [sortField]: sortOrder === '1' ? 1 : -1 };
+    return await this.model
+      .find({}, { title: 1, detail: 1, resume: 1 })
+      .sort(sort)
+      .populate('category')
+      .limit(pageSizeNum)
+      .skip(pageSizeNum * pageNum);
+  }
+
+  public async getAllClassesManagerial(params: QueryParams) {
+    const { pageSize = '5', page = '1', ordering = '_id:1' } = params;
+    const pageSizeNum = parseInt(pageSize);
+    const pageNum = parseInt(page) - 1;
+    const [sortField, sortOrder] = ordering.split(':');
+    const sort: { [key: string]: SortOrder } = { [sortField]: sortOrder === '1' ? 1 : -1 };
+    return await this.model
+      .find({})
+      .sort(sort)
+      .populate('category')
+      .limit(pageSizeNum)
+      .skip(pageSizeNum * pageNum);
   }
 
   public async getClassRoomById(id: string) {
     return await this.model.findById(id).populate('category');
+  }
+
+  public async getClassRoomByFilter(search: any) {
+    return await this.model.find(search, { title: 1, detail: 1, resume: 1 }).populate('category');
   }
 
   public async insertClassRoom(classRoom: IClassRoom) {

@@ -1,11 +1,12 @@
 import ICategory from '../Interfaces/ICategory';
 import CategoryODM from '../Models/CategoryODM';
+import QueryParams from '../Interfaces/IQueryParams';
 
 export default class CategoryService {
   private categoryODM = new CategoryODM();
 
-  public async listCategory() {
-    return this.categoryODM.getAllCategories();
+  public async listCategory(params: QueryParams) {
+    return this.categoryODM.getAllCategories(params);
   }
 
   public async listCategoryById(id: string) {
