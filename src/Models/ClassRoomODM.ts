@@ -2,19 +2,18 @@ import mongoose, { Schema, Model, models } from 'mongoose';
 import IClassRoom from '../Interfaces/IClassRoom';
 import CategoryODM from './CategoryODM';
 
-const categoryODM = new CategoryODM();
-
 export default class ClassRoomODM {
   private schema: Schema;
   private model: Model<IClassRoom>;
+  private categoryODM = new CategoryODM();
 
   constructor() {
     this.schema = new Schema<IClassRoom>(
       {
-        title: { type: String, required: [true, 'O título da aula é obrigatório'] },
-        detail: { type: String, required: [true, 'O detalhe da aula é obrigatório'] },
-        date: { type: Date, required: [true, 'A data da aula é obrigatória'] },
-        resume: { type: String, required: [true, 'O resumo da aula é obrigatório'] },
+        title: { type: String, required: [true, 'The class title is mandatory'] },
+        detail: { type: String, required: [true, 'Class detail is mandatory'] },
+        date: { type: Date, required: [true, 'Class date is mandatory'] },
+        resume: { type: String, required: [true, 'The class summary is mandatory'] },
         image: { type: Object },
         category: { type: Schema.Types.ObjectId, ref: 'Categories' }
       },
@@ -25,30 +24,26 @@ export default class ClassRoomODM {
     );
 
     this.model = models.Classes || mongoose.model('Classes', this.schema);
+    this.categoryODM.getModel();
   }
 
   public async getAllClasses() {
-    const classes = await this.model.find().populate('category');
-    return classes;
+    return await this.model.find().populate('category');
   }
 
   public async getClassRoomById(id: string) {
-    const classRoom = await this.model.findById(id).populate('category');
-    return classRoom;
+    return await this.model.findById(id).populate('category');
   }
 
   public async insertClassRoom(classRoom: IClassRoom) {
-    return this.model.create({ ...classRoom });
+    return await this.model.create({ ...classRoom });
   }
 
   public async updateClassRoom(id: string, classRoom: IClassRoom) {
-    const updateClassRoom = await this.model.findOneAndUpdate({ _id: id }, classRoom, {
-      new: true
-    });
-    return updateClassRoom;
+    return await this.model.findByIdAndUpdate(id, classRoom, { new: true });
   }
 
   public async deleteClassRoom(id: string) {
-    await this.model.findOneAndDelete({ _id: id });
+    return await this.model.findByIdAndDelete(id);
   }
 }

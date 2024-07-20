@@ -2,9 +2,11 @@ import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
 import { config } from './Config/config';
-import Logging from './Library/Logging';
+import Logging from './Middlewares/Logging';
 import categoryRoutes from './Routes/CategoryRouters';
 import classRoomRoutes from './Routes/ClassRoomRouters';
+import errorHandling from './Middlewares/ErrorHandling';
+import manipulator404 from './Middlewares/Manipulator404';
 
 const router = express();
 
@@ -35,33 +37,12 @@ const StartServer = () => {
   router.use(express.urlencoded({ extended: true }));
   router.use(express.json());
 
-  //Rules of API
-  router.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorizathion');
-
-    if (req.method == 'OPTIONS') {
-      res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-      return res.status(200).json({});
-    }
-
-    next();
-  });
-
   //Routes
   router.use('/blogging', new categoryRoutes().getCategoryRouter());
   router.use('/blogging', new classRoomRoutes().getClassRoomRouter());
 
-  //Healthcheck
-  router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));
-
-  //Error handling
-  router.use((req, res, next) => {
-    const error = new Error('not found');
-    Logging.error(error);
-
-    return res.status(404).json({ message: error.message });
-  });
+  router.use(manipulator404);
+  router.use(errorHandling);
 
   http.createServer(router).listen(config.server.port, () => Logging.info(`Server is running on port ${config.server.port}.`));
 };

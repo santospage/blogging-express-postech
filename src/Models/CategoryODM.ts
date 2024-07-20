@@ -8,7 +8,7 @@ export default class CategoryODM {
   constructor() {
     this.schema = new Schema<ICategory>(
       {
-        name: { type: String, required: [true, 'O nome da categoria é obrigatório'] }
+        name: { type: String, required: [true, 'Category name is required'] }
       },
       {
         versionKey: false
@@ -23,27 +23,22 @@ export default class CategoryODM {
   }
 
   public async getAllCategories() {
-    const categories = await this.model.find();
-    return categories;
+    return await this.model.find();
   }
 
   public async getCategoryById(id: string) {
-    const category = await this.model.findById(id);
-    return category;
+    return await this.model.findById(id);
   }
 
   public async insertCategory(category: ICategory) {
-    return this.model.create({ ...category });
+    return await this.model.create({ ...category });
   }
 
   public async updateCategory(id: string, category: ICategory) {
-    const updateCategory = await this.model.findOneAndUpdate({ _id: id }, category, {
-      new: true
-    });
-    return updateCategory;
+    return await this.model.findByIdAndUpdate(id, category, { new: true });
   }
 
   public async deleteCategory(id: string) {
-    await this.model.findOneAndDelete({ _id: id });
+    return await this.model.findByIdAndDelete(id);
   }
 }
