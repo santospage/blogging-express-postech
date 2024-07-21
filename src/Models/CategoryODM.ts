@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, model, models, SortOrder } from 'mongoose';
+import mongoose, { Schema, Model, models } from 'mongoose';
 import ICategory from '../Interfaces/ICategory';
 import IParams from '../Interfaces/IParams';
 import pageDetails from '../Utils/Page';
@@ -13,6 +13,7 @@ export default class CategoryODM {
         name: { type: String, required: [true, 'Category name is required'] }
       },
       {
+        timestamps: true,
         versionKey: false
       }
     );

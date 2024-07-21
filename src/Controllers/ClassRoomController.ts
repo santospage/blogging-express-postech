@@ -33,11 +33,11 @@ export default class ClassRoomController {
     }
   }
 
-  public async listClassByFilter(): Promise<void> {
+  public async listClassesByFilter(): Promise<void> {
     try {
       const search = await this.processSearch(this.req.query);
       if (search) {
-        const classes = await this.classRoomService.listClassRoomByFilter(search, this.req.query);
+        const classes = await this.classRoomService.listClassesByFilter(search, this.req.query);
         this.res.status(201).json(classes);
       } else {
         this.res.status(200).send([]);

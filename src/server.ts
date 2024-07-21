@@ -5,6 +5,8 @@ import { config } from './Config/config';
 import Logging from './Middlewares/Logging';
 import categoryRoutes from './Routes/CategoryRouters';
 import classRoomRoutes from './Routes/ClassRoomRouters';
+import userRoutes from './Routes/UserRouters';
+import loginRoutes from './Routes/LogingRouters';
 import errorHandling from './Middlewares/ErrorHandling';
 import manipulator404 from './Middlewares/Manipulator404';
 
@@ -40,6 +42,8 @@ const StartServer = () => {
   //Routes
   router.use('/blogging', new categoryRoutes().getCategoryRouter());
   router.use('/blogging', new classRoomRoutes().getClassRoomRouter());
+  router.use('/blogging', new userRoutes().getUserRouter());
+  router.use('/blogging', new loginRoutes().getLoginRouter());
 
   router.use(manipulator404);
   router.use(errorHandling);

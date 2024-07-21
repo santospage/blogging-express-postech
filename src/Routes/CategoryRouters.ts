@@ -1,5 +1,6 @@
 import express from 'express';
 import categoryController from '../Controllers/CategoryController';
+import userAuthorization from '../Middlewares/UserAuthorization';
 
 export default class CategoryRouter {
   private router = express.Router();
@@ -7,9 +8,9 @@ export default class CategoryRouter {
   public getCategoryRouter() {
     this.router.get('/categories', (req, res, next) => new categoryController(req, res, next).listCategory());
     this.router.get('/categories/:id', (req, res, next) => new categoryController(req, res, next).listCategoryById());
-    this.router.post('/categories', (req, res, next) => new categoryController(req, res, next).createCategory());
-    this.router.put('/categories/:id', (req, res, next) => new categoryController(req, res, next).updateCategory());
-    this.router.delete('/categories/:id', (req, res, next) => new categoryController(req, res, next).deleteCategory());
+    this.router.post('/categories', userAuthorization, (req, res, next) => new categoryController(req, res, next).createCategory());
+    this.router.put('/categories/:id', userAuthorization, (req, res, next) => new categoryController(req, res, next).updateCategory());
+    this.router.delete('/categories/:id', userAuthorization, (req, res, next) => new categoryController(req, res, next).deleteCategory());
 
     return this.router;
   }

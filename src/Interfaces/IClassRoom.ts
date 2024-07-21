@@ -6,4 +6,5 @@ export default interface IClassRoom {
   resume: string;
   image: object;
   category: object;
+  user: object;
 }

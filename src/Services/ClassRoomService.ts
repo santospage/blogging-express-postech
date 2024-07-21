@@ -17,8 +17,8 @@ export default class ClassRoomService {
     return this.classRoomODM.getClassRoomById(id);
   }
 
-  public async listClassRoomByFilter(search: IParams, params: IParams) {
-    return this.classRoomODM.getClassRoomByFilter(search, params);
+  public async listClassesByFilter(search: IParams, params: IParams) {
+    return this.classRoomODM.getClassesByFilter(search, params);
   }
 
   createClassRoom = async (classRoom: IClassRoom) => {

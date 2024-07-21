@@ -1,10 +1,10 @@
-export default interface QueryParams {
+export default interface IQueryParams {
   pageSize?: string;
   page?: string;
   ordering?: string;
 }
 
-export default interface SearchParams {
+export default interface ISearchClasses {
   title?: string;
   detail?: string;
   resume?: string;
