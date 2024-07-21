@@ -3,21 +3,16 @@ import ClassRoomService from '../Services/ClassRoomService';
 import IClassRoom from '../Interfaces/IClassRoom';
 import mongoose, { Model } from 'mongoose';
 import NotFound from '../Errors/NotFound';
-
-interface SearchParams {
-  title?: string;
-  detail?: string;
-  resume?: string;
-  nameCategory?: string;
-}
+import IParams from '../Interfaces/IParams';
+import CategoryService from '../Services/CategoryService';
 
 export default class ClassRoomController {
   private classRoomService: ClassRoomService;
-  //private categoryModel: Model<Document>;
+  private category: CategoryService;
 
   constructor(private req: Request, private res: Response, private next: NextFunction) {
     this.classRoomService = new ClassRoomService();
-    //this.categoryModel = categoryModel;
+    this.category = new CategoryService();
   }
 
   public async listClasses(): Promise<void> {
@@ -42,7 +37,7 @@ export default class ClassRoomController {
     try {
       const search = await this.processSearch(this.req.query);
       if (search) {
-        const classes = await this.classRoomService.listClassRoomByFilter(search);
+        const classes = await this.classRoomService.listClassRoomByFilter(search, this.req.query);
         this.res.status(201).json(classes);
       } else {
         this.res.status(200).send([]);
@@ -105,20 +100,21 @@ export default class ClassRoomController {
     }
   }
 
-  public async processSearch(params: SearchParams) {
-    const { title, detail, resume, nameCategory } = params;
+  public async processSearch(params: IParams) {
+    const { title, detail, resume, category } = params;
     let search: any = {};
 
     if (title) search.title = new RegExp(title, 'i');
     if (detail) search.detail = new RegExp(detail, 'i');
     if (resume) search.resume = new RegExp(resume, 'i');
-    if (nameCategory) {
-      //const categoryResult = await this.categoryModel.findOne({ name: nameCategory });
-      //if (categoryResult) {
-      //search.category = categoryResult._id;
-      //} else {
-      //search = null;
-      //}
+    if (category) {
+      search.category = new RegExp(category, 'i');
+      const categoryResult = await this.category.listCategoryByFilter(search.category);
+      if (categoryResult) {
+        search.category = categoryResult;
+      } else {
+        search = null;
+      }
     }
     return search;
   }

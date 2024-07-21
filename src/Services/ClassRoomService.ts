@@ -1,15 +1,15 @@
 import IClassRoom from '../Interfaces/IClassRoom';
-import QueryParams from '../Interfaces/IQueryParams';
+import IParams from '../Interfaces/IParams';
 import ClassRoomODM from '../Models/ClassRoomODM';
 
 export default class ClassRoomService {
   private classRoomODM = new ClassRoomODM();
 
-  public async listClasses(params: QueryParams) {
+  public async listClasses(params: IParams) {
     return this.classRoomODM.getAllClasses(params);
   }
 
-  public async listClassesManagerial(params: QueryParams) {
+  public async listClassesManagerial(params: IParams) {
     return this.classRoomODM.getAllClassesManagerial(params);
   }
 
@@ -17,12 +17,12 @@ export default class ClassRoomService {
     return this.classRoomODM.getClassRoomById(id);
   }
 
-  public async listClassRoomByFilter(search: any) {
-    return this.classRoomODM.getClassRoomByFilter(search);
+  public async listClassRoomByFilter(search: IParams, params: IParams) {
+    return this.classRoomODM.getClassRoomByFilter(search, params);
   }
 
   createClassRoom = async (classRoom: IClassRoom) => {
-    return this.classRoomODM.getClassRoomById(classRoom.id);
+    return this.classRoomODM.insertClassRoom(classRoom);
   };
 
   public async updateClassRoom(id: string, classRoom: IClassRoom) {

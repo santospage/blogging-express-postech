@@ -1,16 +1,20 @@
 import ICategory from '../Interfaces/ICategory';
 import CategoryODM from '../Models/CategoryODM';
-import QueryParams from '../Interfaces/IQueryParams';
+import IParams from '../Interfaces/IParams';
 
 export default class CategoryService {
   private categoryODM = new CategoryODM();
 
-  public async listCategory(params: QueryParams) {
+  public async listCategory(params: IParams) {
     return this.categoryODM.getAllCategories(params);
   }
 
   public async listCategoryById(id: string) {
     return this.categoryODM.getCategoryById(id);
+  }
+
+  public async listCategoryByFilter(category: string) {
+    return this.categoryODM.getCategoryByFilter(category);
   }
 
   createCategory = async (category: ICategory) => {

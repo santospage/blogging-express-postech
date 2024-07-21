@@ -34,6 +34,19 @@ export default class CategoryController {
     }
   }
 
+  public async listCategoryByFilter(category: string): Promise<void> {
+    try {
+      const categoryFound = await this.categoryService.listCategoryByFilter(category);
+      if (categoryFound) {
+        this.res.status(200).json(categoryFound);
+      } else {
+        this.next(new NotFound('Category Id not found'));
+      }
+    } catch (e) {
+      this.next(e);
+    }
+  }
+
   public createCategory = async (): Promise<void> => {
     try {
       const category: ICategory = { id: String(new mongoose.Types.ObjectId()), ...this.req.body };
