@@ -1,14 +1,15 @@
 import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
-import { config } from './Config/config';
-import Logging from './Middlewares/Logging';
-import categoryRoutes from './Routes/CategoryRouters';
-import classRoomRoutes from './Routes/ClassRoomRouters';
-import userRoutes from './Routes/UserRouters';
-import loginRoutes from './Routes/LogingRouters';
-import errorHandling from './Middlewares/ErrorHandling';
-import manipulator404 from './Middlewares/Manipulator404';
+
+import { config } from './config/config';
+import Logging from './middlewares/logging';
+import categoryRoutes from './routes/category-routes';
+import classRoomRoutes from './routes/classroom-routes';
+import userRoutes from './routes/user-routes';
+import loginRoutes from './routes/loging-routes';
+import errorHandling from './middlewares/error-handler';
+import manipulator404 from './middlewares/manipulator404';
 
 const router = express();
 
