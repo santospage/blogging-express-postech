@@ -11,8 +11,9 @@ npm-debug.log
 # Arquivo de configuração prettier
 .prettierrc
 
-# Arquivos gerados na build
+# Arquivos gerados na build e coverage
 /build
+/coverage
 
 # Logs
 logs
