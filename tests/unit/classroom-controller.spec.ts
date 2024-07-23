@@ -47,6 +47,28 @@ describe('ClassRoomController', () => {
     });
   });
 
+  describe('listClassRoomManagerial', () => {
+    it('should return a list of classes managerial', async () => {
+      const classes = [{ id: '1', title: 'classroom1' }];
+      (ClassRoomService.prototype.listClassesManagerial as jest.Mock).mockResolvedValue(classes);
+      req.query = {};
+
+      await controller.listClassesManagerial();
+
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith(classes);
+    });
+
+    it('should handle errors', async () => {
+      const error = new Error('Something went wrong');
+      (ClassRoomService.prototype.listClassesManagerial as jest.Mock).mockRejectedValue(error);
+
+      await controller.listClassesManagerial();
+
+      expect(next).toHaveBeenCalledWith(error);
+    });
+  });
+
   describe('listClassRoomById', () => {
     it('should return a classroom by id', async () => {
       const classroom = { id: '1', title: 'classes1' };
@@ -79,7 +101,7 @@ describe('ClassRoomController', () => {
     });
   });
 
-  xdescribe('createClassRoom', () => {
+  describe('createClassRoom', () => {
     it('should create a new classroom', async () => {
       const newClassRoom = { id: '1', title: 'new classroom' };
       req.body = { title: 'new classroom' };

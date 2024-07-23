@@ -17,9 +17,9 @@ export default class CategoryService {
     return this.categoryODM.getCategoryByFilter(category);
   }
 
-  createCategory = async (category: ICategory) => {
+  public async createCategory(category: ICategory) {
     return this.categoryODM.insertCategory(category);
-  };
+  }
 
   public async updateCategory(id: string, category: ICategory) {
     return this.categoryODM.updateCategory(id, category);

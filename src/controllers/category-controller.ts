@@ -50,7 +50,7 @@ export default class CategoryController {
 
   public createCategory = async (): Promise<void> => {
     try {
-      const category: ICategory = { id: String(new mongoose.Types.ObjectId()), ...this.req.body };
+      const category: ICategory = { id: new mongoose.Types.ObjectId().toString, ...this.req.body };
       const newCategory = await this.categoryService.createCategory(category);
       this.res.status(201).json({ message: 'Category created!', id: newCategory });
     } catch (e) {

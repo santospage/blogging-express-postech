@@ -37,7 +37,7 @@ export default class UserController {
 
   public createUser = async (): Promise<void> => {
     try {
-      const user: IUser = { id: String(new mongoose.Types.ObjectId()), ...this.req.body };
+      const user: IUser = { id: new mongoose.Types.ObjectId().toString, ...this.req.body };
       const newUser = await this.userService.createUser(user);
       this.res.status(201).json({ message: 'User created!', id: newUser });
     } catch (e) {

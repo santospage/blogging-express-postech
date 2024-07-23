@@ -79,10 +79,10 @@ describe('CategoryController', () => {
     });
   });
 
-  xdescribe('createCategory', () => {
+  describe('createCategory', () => {
     it('should create a new category', async () => {
-      const newCategory = { id: '1', title: 'new category' };
-      req.body = { title: 'new category' };
+      const newCategory = { id: '1', name: 'new category' };
+      req.body = { name: 'new category' };
       (CategoryService.prototype.createCategory as jest.Mock).mockResolvedValue(newCategory.id);
 
       await controller.createCategory();
@@ -94,7 +94,7 @@ describe('CategoryController', () => {
     it('should handle errors', async () => {
       const error = new Error('Something went wrong');
       (CategoryService.prototype.createCategory as jest.Mock).mockRejectedValue(error);
-      req.body = { title: 'new category' };
+      req.body = { name: 'new category' };
 
       await controller.createCategory();
 
@@ -104,9 +104,9 @@ describe('CategoryController', () => {
 
   describe('updateCategory', () => {
     it('should update a category', async () => {
-      const updatedCategory = { id: '1', title: 'updated category' };
+      const updatedCategory = { id: '1', name: 'updated category' };
       req.params = { id: '1' };
-      req.body = { title: 'updated category' };
+      req.body = { name: 'updated category' };
       (CategoryService.prototype.updateCategory as jest.Mock).mockResolvedValue(updatedCategory);
 
       await controller.updateCategory();
@@ -117,7 +117,7 @@ describe('CategoryController', () => {
 
     it('should handle category not found', async () => {
       req.params = { id: '1' };
-      req.body = { title: 'updated category' };
+      req.body = { name: 'updated category' };
       (CategoryService.prototype.updateCategory as jest.Mock).mockResolvedValue(null);
 
       await controller.updateCategory();
@@ -128,7 +128,7 @@ describe('CategoryController', () => {
     it('should handle errors', async () => {
       const error = new Error('Something went wrong');
       req.params = { id: '1' };
-      req.body = { title: 'updated category' };
+      req.body = { name: 'updated category' };
       (CategoryService.prototype.updateCategory as jest.Mock).mockRejectedValue(error);
 
       await controller.updateCategory();

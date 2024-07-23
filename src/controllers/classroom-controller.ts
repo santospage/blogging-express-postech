@@ -64,7 +64,7 @@ export default class ClassRoomController {
 
   public createClassRoom = async (): Promise<void> => {
     try {
-      const classRoom: IClassRoom = { id: String(new mongoose.Types.ObjectId()), ...this.req.body };
+      const classRoom: IClassRoom = { id: new mongoose.Types.ObjectId().toString, ...this.req.body };
       const newClassRoom = await this.classRoomService.createClassRoom(classRoom);
       this.res.status(201).json({ message: 'ClassRoom created!', id: newClassRoom });
     } catch (e) {

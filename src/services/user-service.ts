@@ -17,9 +17,9 @@ export default class UserService {
     return this.userModel.getUserByCode(userCode);
   }
 
-  createUser = async (user: IUser) => {
+  public async createUser(user: IUser) {
     return this.userModel.insertUser(user);
-  };
+  }
 
   public async updateUser(id: string, user: IUser) {
     return this.userModel.updateUser(id, user);

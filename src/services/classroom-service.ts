@@ -21,9 +21,9 @@ export default class ClassRoomService {
     return this.classRoomModel.getClassesByFilter(search, params);
   }
 
-  createClassRoom = async (classRoom: IClassRoom) => {
+  public async createClassRoom(classRoom: IClassRoom) {
     return this.classRoomModel.insertClassRoom(classRoom);
-  };
+  }
 
   public async updateClassRoom(id: string, classRoom: IClassRoom) {
     return this.classRoomModel.updateClassRoom(id, classRoom);

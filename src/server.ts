@@ -7,7 +7,7 @@ import Logging from './middlewares/logging';
 import categoryRoutes from './routes/category-routes';
 import classRoomRoutes from './routes/classroom-routes';
 import userRoutes from './routes/user-routes';
-import loginRoutes from './routes/loging-routes';
+import loginRoutes from './routes/login-routes';
 import errorHandling from './middlewares/error-handler';
 import manipulator404 from './middlewares/manipulator404';
 
