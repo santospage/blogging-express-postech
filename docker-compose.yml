@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  blogging-mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb-blogging-volume:/data/db
+    restart: always
+
+  api:
+    container_name: blogging-api
+    build:
+      context: .
+    restart: always
+    ports:
+      - '3000:3000'
+    depends_on:
+      - blogging-mongo
+    env_file:
+      - .env
+
+volumes:
+  mongodb-blogging-volume:
