@@ -12,7 +12,7 @@ npm-debug.log
 .prettierrc
 
 # Arquivos gerados na build e coverage
-/build
+/dist
 /coverage
 
 # Logs
