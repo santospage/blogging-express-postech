@@ -12,6 +12,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.17.0",
+    "@typescript-eslint/parser": "^7.17.0",
     "chalk": "^4.1.2",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
