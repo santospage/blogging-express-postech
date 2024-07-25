@@ -1,5 +1,4 @@
 import express from 'express';
-
 import categoryController from '../controllers/category-controller';
 import userAuthorization from '../middlewares/user-authorization';
 

@@ -1,7 +1,6 @@
 import express from 'express';
 import http from 'http';
 import mongoose from 'mongoose';
-
 import { config } from './config/config';
 import Logging from './middlewares/logging';
 import categoryRoutes from './routes/category-routes';

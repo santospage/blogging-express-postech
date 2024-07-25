@@ -1,5 +1,4 @@
 import mongoose, { Schema, Model, models } from 'mongoose';
-
 import IUser from '../interfaces/user';
 import IParams from '../interfaces/params';
 import pageDetails from '../utils/page';
