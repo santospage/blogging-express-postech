@@ -1,5 +1,4 @@
 import { NextFunction, Response, Request } from 'express';
-
 import UserService from '../services/user-service';
 import NotFound from '../errors/not-found';
 import validUser from '../utils/valid-user';

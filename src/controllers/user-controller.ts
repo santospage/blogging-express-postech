@@ -1,6 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
 import mongoose, { Model } from 'mongoose';
-
 import UserService from '../services/user-service';
 import IUser from '../interfaces/user';
 import NotFound from '../errors/not-found';

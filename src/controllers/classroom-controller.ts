@@ -1,6 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
 import mongoose, { Model } from 'mongoose';
-
 import ClassRoomService from '../services/classroom-service';
 import IClassRoom from '../interfaces/classroom';
 import NotFound from '../errors/not-found';

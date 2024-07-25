@@ -1,6 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
 import mongoose from 'mongoose';
-
 import CategoryService from '../services/category-service';
 import ICategory from '../interfaces/category';
 import NotFound from '../errors/not-found';

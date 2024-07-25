@@ -1,5 +1,4 @@
 import mongoose, { Schema, Model, models } from 'mongoose';
-
 import IClassRoom from '../interfaces/classroom';
 import CategoryModel from './category-model';
 import IParams from '../interfaces/params';

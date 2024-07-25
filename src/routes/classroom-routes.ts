@@ -1,5 +1,4 @@
 import express from 'express';
-
 import classRoomController from '../controllers/classroom-controller';
 import userAuthorization from '../middlewares/user-authorization';
 
