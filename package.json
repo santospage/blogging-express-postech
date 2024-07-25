@@ -6,7 +6,7 @@
     "build": "rm -rf dist/ && tsc",
     "start": "node dist/server.js",
     "test": "jest --coverage",
-    "lint": "eslint --fix --ignore-path .gitignore ."
+    "lint": "eslint --fix --ignore-pattern .gitignore ."
   },
   "author": "",
   "license": "ISC",
