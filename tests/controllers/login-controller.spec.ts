@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import mongoose from 'mongoose';
 import UserService from '../../src/services/user-service';
 import NotFound from '../../src/errors/not-found';
 import validUser from '../../src/utils/valid-user';
@@ -21,7 +20,7 @@ describe('LoginController', () => {
   beforeEach(() => {
     req = {
       body: {
-        user: 'testUser',
+        user: 'professor',
         password: 'testPassword'
       }
     };
