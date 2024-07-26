@@ -39,7 +39,7 @@ describe('CategoryService', () => {
   });
 
   it('should call getCategoryByFilter with the correct filter', async () => {
-    const filter = 'some-filter';
+    const filter = 'portugues';
     categoryModelMock.getCategoryByFilter.mockResolvedValue([]);
     await categoryService.listCategoryByFilter(filter);
     expect(categoryModelMock.getCategoryByFilter).toHaveBeenCalledWith(filter);
