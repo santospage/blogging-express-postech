@@ -152,8 +152,9 @@ A API expõe os seguintes _endpoints_ a partir da _base URL_ `localhost:3000/blo
 `/classes`
 
 - `GET /classes`
-- `GET /classes/managerial`
+- `GET /classes/search`
 - `GET /classes/:id`
+- `GET /classes/managerial`
 - `POST /classes`
 - `PUT /classes/:id`
 - `DELETE /classes/:id`
@@ -170,7 +171,7 @@ A API expõe os seguintes _endpoints_ a partir da _base URL_ `localhost:3000/blo
 
 - `POST /login`
 
-### Consulta aos bancos
+### Banco de Dados
 
 Este projeto utiliza o Mongodb como gerenciador de banco de dados.
 

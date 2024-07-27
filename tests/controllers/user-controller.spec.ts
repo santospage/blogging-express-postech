@@ -112,7 +112,7 @@ describe('UserController', () => {
       await controller.updateUser();
 
       expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith(updatedUser);
+      expect(res.json).toHaveBeenCalledWith({ message: 'User updated!', id: updatedUser });
     });
 
     it('should handle user not found', async () => {

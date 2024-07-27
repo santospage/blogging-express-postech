@@ -25,14 +25,10 @@ export default class LoginController {
               token: tokenJwt
             });
           } else {
-            this.res.status(204).json({
-              message: 'Username or password is invalid'
-            });
+            this.next(new NotFound('Username or password is invalid'));
           }
         } else {
-          this.res.status(204).json({
-            message: 'Username or password is invalid'
-          });
+          this.next(new NotFound('Username or password is invalid'));
         }
       } else {
         this.next(new NotFound('User not found'));

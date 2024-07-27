@@ -134,7 +134,7 @@ describe('ClassRoomController', () => {
       await controller.updateClassRoom();
 
       expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith(updatedClassRoom);
+      expect(res.json).toHaveBeenCalledWith({ message: 'ClassRoom updated!', id: updatedClassRoom });
     });
 
     it('should handle classroom not found', async () => {
