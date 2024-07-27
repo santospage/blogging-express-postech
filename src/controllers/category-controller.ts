@@ -63,7 +63,7 @@ export default class CategoryController {
       const category: ICategory = { ...this.req.body };
       const updateCategory = await this.categoryService.updateCategory(id, category);
       if (updateCategory) {
-        this.res.status(201).json(updateCategory);
+        this.res.status(201).json({ message: 'Category updated!', id: updateCategory });
       } else {
         this.next(new NotFound('Category Id not found'));
       }

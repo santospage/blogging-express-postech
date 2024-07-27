@@ -50,7 +50,7 @@ export default class UserController {
       const user: IUser = { ...this.req.body };
       const updateUser = await this.userService.updateUser(id, user);
       if (updateUser) {
-        this.res.status(201).json(updateUser);
+        this.res.status(201).json({ message: 'User updated!', id: updateUser });
       } else {
         this.next(new NotFound('User Id not found'));
       }

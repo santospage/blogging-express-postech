@@ -77,7 +77,7 @@ export default class ClassRoomController {
       const classRoom: IClassRoom = { ...this.req.body };
       const updateClasRoom = await this.classRoomService.updateClassRoom(id, classRoom);
       if (updateClasRoom) {
-        this.res.status(201).json(updateClasRoom);
+        this.res.status(201).json({ message: 'ClassRoom updated!', id: updateClasRoom });
       } else {
         this.next(new NotFound('Class Id not found'));
       }
