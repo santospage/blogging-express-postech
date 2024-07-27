@@ -112,7 +112,7 @@ describe('CategoryController', () => {
       await controller.updateCategory();
 
       expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith(updatedCategory);
+      expect(res.json).toHaveBeenCalledWith({ message: 'Category updated!', id: updatedCategory });
     });
 
     it('should handle category not found', async () => {

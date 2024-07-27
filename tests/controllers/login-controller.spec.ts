@@ -64,7 +64,7 @@ describe('LoginController', () => {
       expect(next).toHaveBeenCalledWith(expect.any(NotFound));
     });
 
-    it('should return 204 for invalid password', async () => {
+    it('should return for invalid user or password', async () => {
       const { user } = req.body;
 
       userServiceMock.findUser.mockResolvedValue(user);
@@ -72,10 +72,7 @@ describe('LoginController', () => {
 
       await loginController.loginUser();
 
-      expect(res.status).toHaveBeenCalledWith(204);
-      expect(res.json).toHaveBeenCalledWith({
-        message: 'Username or password is invalid'
-      });
+      expect(next).toHaveBeenCalledWith(expect.any(NotFound));
     });
 
     it('should handle errors and call next with the error', async () => {
