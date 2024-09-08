@@ -36,7 +36,7 @@ export default class ClassRoomModel {
   public async getAllClasses(params: IParams) {
     const page = pageDetails(params);
     return await this.model
-      .find({}, { title: 1, detail: 1, resume: 1 })
+      .find({}, { title: 1, detail: 1, resume: 1, image: 1, updatedAt: 1 })
       .sort(page.sort)
       .populate('category', 'name')
       .populate('user', 'user')
