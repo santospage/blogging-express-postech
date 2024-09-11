@@ -56,13 +56,14 @@ export default class ClassRoomModel {
   }
 
   public async getClassRoomById(id: string) {
-    return await this.model.findById(id, { title: 1, detail: 1, resume: 1 }).populate('category', 'name').populate('user', 'user');
+    return await this.model.findById(id, { title: 1, detail: 1, resume: 1, image: 1, updatedAt: 1 })
+    .populate('category', 'name').populate('user', 'user');
   }
 
   public async getClassesByFilter(search: IParams, params: IParams) {
     const page = pageDetails(params);
     return await this.model
-      .find(search, { title: 1, detail: 1, resume: 1 })
+      .find(search, { title: 1, detail: 1, resume: 1, image: 1, updatedAt: 1 })
       .populate('category', 'name')
       .populate('user', 'user')
       .sort(page.sort)
