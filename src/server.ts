@@ -11,9 +11,14 @@ import errorHandling from './middlewares/error-handler';
 import manipulator404 from './middlewares/manipulator404';
 
 const router = express();
+const cors = require('cors');
 
 mongoose
-  .connect(config.mongo.url, { retryWrites: true, w: 'majority', appName: 'Cluster0' })
+  .connect(config.mongo.url, {
+    retryWrites: true,
+    w: 'majority',
+    appName: 'Cluster0',
+  })
   .then(() => {
     Logging.info('Connected to Blogging.');
     StartServer();
@@ -24,13 +29,25 @@ mongoose
   });
 
 const StartServer = () => {
+  router.use(
+    cors({
+      origin: '*',
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    })
+  );
+
   router.use((req, res, next) => {
     //Request
-    Logging.info(`Incoming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}]`);
+    Logging.info(
+      `Incoming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}]`
+    );
 
     res.on('finish', () => {
       //Response
-      Logging.info(`Incoming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}] Status: [${res.statusCode}]`);
+      Logging.info(
+        `Incoming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${req.socket.remoteAddress}] Status: [${res.statusCode}]`
+      );
     });
 
     next();
@@ -48,5 +65,9 @@ const StartServer = () => {
   router.use(manipulator404);
   router.use(errorHandling);
 
-  http.createServer(router).listen(config.server.port, () => Logging.info(`Server is running on port ${config.server.port}.`));
+  http
+    .createServer(router)
+    .listen(config.server.port, () =>
+      Logging.info(`Server is running on port ${config.server.port}.`)
+    );
 };
