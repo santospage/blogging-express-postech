@@ -7,13 +7,30 @@ import NotFound from '../errors/not-found';
 export default class CategoryController {
   private categoryService: CategoryService;
 
-  constructor(private req: Request, private res: Response, private next: NextFunction) {
+  constructor(
+    private req: Request,
+    private res: Response,
+    private next: NextFunction
+  ) {
     this.categoryService = new CategoryService();
   }
 
   public async listCategory(): Promise<void> {
     try {
-      const categories = await this.categoryService.listCategory(this.req.query);
+      const categories = await this.categoryService.listCategory(
+        this.req.query
+      );
+      this.res.status(201).json(categories);
+    } catch (e) {
+      this.next(e);
+    }
+  }
+
+  public async listCategoryManagerial(): Promise<void> {
+    try {
+      const categories = await this.categoryService.listCategory(
+        this.req.query
+      );
       this.res.status(201).json(categories);
     } catch (e) {
       this.next(e);
@@ -36,7 +53,9 @@ export default class CategoryController {
 
   public async listCategoryByFilter(category: string): Promise<void> {
     try {
-      const categoryFound = await this.categoryService.listCategoryByFilter(category);
+      const categoryFound = await this.categoryService.listCategoryByFilter(
+        category
+      );
       if (categoryFound) {
         this.res.status(200).json(categoryFound);
       } else {
@@ -49,9 +68,14 @@ export default class CategoryController {
 
   public createCategory = async (): Promise<void> => {
     try {
-      const category: ICategory = { id: new mongoose.Types.ObjectId().toString, ...this.req.body };
+      const category: ICategory = {
+        id: new mongoose.Types.ObjectId().toString,
+        ...this.req.body,
+      };
       const newCategory = await this.categoryService.createCategory(category);
-      this.res.status(201).json({ message: 'Category created!', id: newCategory });
+      this.res
+        .status(201)
+        .json({ message: 'Category created!', id: newCategory });
     } catch (e) {
       this.next(e);
     }
@@ -61,9 +85,14 @@ export default class CategoryController {
     try {
       const { id } = this.req.params;
       const category: ICategory = { ...this.req.body };
-      const updateCategory = await this.categoryService.updateCategory(id, category);
+      const updateCategory = await this.categoryService.updateCategory(
+        id,
+        category
+      );
       if (updateCategory) {
-        this.res.status(201).json({ message: 'Category updated!', id: updateCategory });
+        this.res
+          .status(201)
+          .json({ message: 'Category updated!', id: updateCategory });
       } else {
         this.next(new NotFound('Category Id not found'));
       }
