@@ -27,7 +27,7 @@ export default class OpenAIService {
             } else {
               response(mockTest);
             }
-          }, 3000);
+          }, 2000);
         });
       } else {
         const userContent =
