@@ -6,6 +6,7 @@ import Logging from './middlewares/logging';
 import categoryRoutes from './routes/category-routes';
 import classRoomRoutes from './routes/classroom-routes';
 import userRoutes from './routes/user-routes';
+import openaiRoutes from './routes/openai-routes';
 import loginRoutes from './routes/login-routes';
 import errorHandling from './middlewares/error-handler';
 import manipulator404 from './middlewares/manipulator404';
@@ -60,6 +61,7 @@ const StartServer = () => {
   router.use('/blogging', new categoryRoutes().getCategoryRouter());
   router.use('/blogging', new classRoomRoutes().getClassRoomRouter());
   router.use('/blogging', new userRoutes().getUserRouter());
+  router.use('/blogging', new openaiRoutes().getOpenAIRouter());
   router.use('/blogging', new loginRoutes().getLoginRouter());
 
   router.use(manipulator404);
