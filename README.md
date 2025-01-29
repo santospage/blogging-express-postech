@@ -17,6 +17,7 @@ Projeto de API REST para um Blogging de Aulas com sistema de cadastro e manejo d
 - `join` v3.0.0
 - `jsonwebtoken` v3.0.0
 - `mongoose` v8.5.1
+- `openai` v4.80.1
 
 ## Instalação
 
@@ -32,6 +33,7 @@ Este projeto já conta com o código necessário para subir a API em um servidor
 │   │   ├── category-controllers.ts
 │   │   ├── classroom-controllers.ts
 │   │   ├── login-controllers.ts
+│   │   ├── openai-controllers.ts
 │   │   └── user-controllers.ts
 │   ├── domains
 │   │   ├── category-domain.ts
@@ -52,6 +54,10 @@ Este projeto já conta com o código necessário para subir a API em um servidor
 │   │   ├── logging.ts
 │   │   ├── manipulator404.ts
 │   │   └── user-authorization.ts
+│   ├── mocks
+│   │   ├── openai-detail.mock.ts
+│   │   ├── openai-resume.mock.ts
+│   │   └── openai-test.mock.ts
 │   ├── models
 │   │   ├── category-model.ts
 │   │   ├── classroom-model.ts
@@ -64,6 +70,7 @@ Este projeto já conta com o código necessário para subir a API em um servidor
 │   ├── services
 │   │   ├── category-service.ts
 │   │   ├── classroom-service.ts
+│   │   ├── openai-service.ts
 │   │   └── user-service.ts
 │   ├── utils
 │   │   ├── create-hash.ts
@@ -75,6 +82,7 @@ Este projeto já conta com o código necessário para subir a API em um servidor
 │   │   │   ├── category-controller.spec.ts
 │   │   │   ├── classroom-controller.spec.ts
 │   │   │   ├── login-controller.spec.ts
+│   │   │   ├── openai-controller.spec.ts
 │   │   │   └── user-controller.spec.ts
 │   │   ├── middlewares
 │   │   │   └── user-authorization.spec.ts
@@ -85,6 +93,7 @@ Este projeto já conta com o código necessário para subir a API em um servidor
 │   │   ├── services
 │   │   │   ├── category-service.spec.ts
 │   │   │   ├── classroom-service.spec.ts
+│   │   │   ├── openai-service.spec.ts
 │   │   │   └── user-service.spec.ts
 │   │   ├── utils
 │   │   │   ├── create-jwt.spec.ts
@@ -140,6 +149,10 @@ Este projeto utiliza o Nodemon para gerenciar as mudanças na base de código e 
 ### Endpoints
 
 A API expõe os seguintes _endpoints_ a partir da _base URL_ `localhost:3000/blogging`:
+
+`/aigenerate`
+
+- `POST /aigenerate`
 
 `/categories`
 
